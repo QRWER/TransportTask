@@ -47,9 +47,21 @@ public class RESTController {
     }
 
     @PostMapping("/solve")
-    public ResponseEntity<?> solveTask(@RequestBody TransportTask task) {
-        Solution solution = Solver.solveTransportationProblem(task);
-        return ResponseEntity.ok(solutionService.save(solution));
+    public ResponseEntity<?> solveTask(@RequestParam Integer id) {
+        Optional<TransportTask> task = taskService.getById(id);
+        if(task.isPresent()) {
+            Optional<Solution> solution = solutionService.getById(task.get().getId());
+            if(solution.isEmpty()) {
+                TransportTask task1 = task.get();
+                Solution newSolution = Solver.solveTransportationProblem(task1);
+                solutionService.save(newSolution);
+                return ResponseEntity.ok(newSolution);
+            }
+            else {
+                return ResponseEntity.badRequest().body("Решение этой задачи уже существует");
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }
