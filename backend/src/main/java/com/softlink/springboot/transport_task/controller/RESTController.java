@@ -24,7 +24,6 @@ public class RESTController {
 
     @GetMapping("/tasks")
     public ResponseEntity<?> getAllTasks() {
-        System.out.println("Я тут");
         List<TransportTask> tasks = taskService.getAll();
         return ResponseEntity.ok(tasks);
     }

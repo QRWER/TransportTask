@@ -28,13 +28,28 @@ public class TransportTask {
     @JdbcTypeCode(SqlTypes.JSON)
     private int[] needs;
 
+    private void checkSuppliesSize(int[][] matrix, int[] supplies) {
+        if(matrix.length != supplies.length) throw new ArrayStoreException("Matrix length doesn't match with Supplies length");
+    }
+
+    private void checkNeedsSize(int[][] matrix, int[] needs) {
+        for (int[] vector : matrix) {
+            if (vector.length != needs.length)
+                throw new ArrayStoreException("Matrix length doesn't match with Needs length");
+        }
+    }
+
     public TransportTask(int[][] matrix, int[] supplies, int[] needs) {
+        checkSuppliesSize(matrix, supplies);
+        checkNeedsSize(matrix, needs);
         this.matrix = matrix;
         this.supplies = supplies;
         this.needs = needs;
     }
 
     public TransportTask(int id, int[][] matrix, int[] supplies, int[] needs) {
+        checkSuppliesSize(matrix, supplies);
+        checkNeedsSize(matrix, needs);
         this.id = id;
         this.matrix = matrix;
         this.supplies = supplies;
@@ -56,6 +71,8 @@ public class TransportTask {
     }
 
     public void setMatrix(int[][] matrix) {
+        if(supplies!=null) checkSuppliesSize(matrix, supplies);
+        if(needs!=null) checkNeedsSize(matrix, needs);
         this.matrix = matrix;
     }
 
@@ -64,6 +81,7 @@ public class TransportTask {
     }
 
     public void setSupplies(int[] supplies) {
+        if(matrix != null) checkSuppliesSize(matrix, supplies);
         this.supplies = supplies;
     }
 
@@ -72,6 +90,7 @@ public class TransportTask {
     }
 
     public void setNeeds(int[] needs) {
+        if(matrix != null) checkNeedsSize(matrix, needs);
         this.needs = needs;
     }
 
