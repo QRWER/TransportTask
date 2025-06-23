@@ -3,6 +3,7 @@ package com.softlink.springboot.transport_task.service;
 import com.softlink.springboot.transport_task.entity.TransportTask;
 import com.softlink.springboot.transport_task.repository.TransportTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,10 @@ public class TransportTaskService {
 
     public List<TransportTask> getAll(){
         return transportTaskRepository.findAll();
+    }
+
+    public List<TransportTask> get10Desc(){
+        return transportTaskRepository.findTop10ByOrderByIdDesc();
     }
 
     public Optional<TransportTask> getById(int id){

@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/transport")
+@CrossOrigin
 public class RESTController {
 
     @Autowired
@@ -24,7 +25,7 @@ public class RESTController {
 
     @GetMapping("/tasks")
     public ResponseEntity<?> getAllTasks() {
-        List<TransportTask> tasks = taskService.getAll();
+        List<TransportTask> tasks = taskService.get10Desc();
         return ResponseEntity.ok(tasks);
     }
 
@@ -46,21 +47,12 @@ public class RESTController {
     }
 
     @PostMapping("/solve")
-    public ResponseEntity<?> solveTask(@RequestParam Integer id) {
-        Optional<TransportTask> task = taskService.getById(id);
-        if(task.isPresent()) {
-            Optional<Solution> solution = solutionService.getById(task.get().getId());
-            if(solution.isEmpty()) {
-                TransportTask task1 = task.get();
-                Solution newSolution = Solver.solveTransportationProblem(task1);
-                solutionService.save(newSolution);
-                return ResponseEntity.ok(newSolution);
-            }
-            else {
-                return ResponseEntity.badRequest().body("Решение этой задачи уже существует");
-            }
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<?> solveTask(@RequestBody TransportTask task) {
+        task = taskService.save(task);
+        Solution newSolution = Solver.solveTransportationProblem(task);
+        solutionService.save(newSolution);
+        return ResponseEntity.ok(newSolution);
+
     }
 
 }

@@ -31,7 +31,7 @@ public interface Solver {
             newMatrix[supplies.length-1] = new int[needs.length];
             matrix = newMatrix;
         }
-        else {
+        else if(difference < 0) {
             int[] newNeeds = new int[needs.length + 1];
             System.arraycopy(needs, 0, newNeeds, 0, needs.length);
             newNeeds[needs.length] = -difference;
