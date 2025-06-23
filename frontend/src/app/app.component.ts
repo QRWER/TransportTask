@@ -8,76 +8,79 @@ import {Solution} from "./Solution";
     standalone: true,
     imports: [FormsModule, ReactiveFormsModule],
     providers: [HttpService],
+    styleUrls: ["app.component.css"],
     template: `
-        <h1 style="text-align: center"> Транспортная задача </h1>
-        <div style="display: block; width: 100%;">
-            <div style="width: 50%; float: left; display: inline-block;">
-                <div>
-                    <label>Поставщики</label><br>
-                    <input type="number" step="1" min="2" name="rows" [(ngModel)]="rows"
-                           (ngModelChange)="onRowChange()"><br>
-                    <label>Потребители</label><br>
-                    <input type="number" step="1" min="2" name="columns" [(ngModel)]="columns"
-                           (ngModelChange)="onColumnChange()"><br>
-                </div>
-                <br>
-                <form [formGroup]="formGroup" novalidate (ngSubmit)="submit()">
-                    <label>Матрица стоимости</label>
-                    <div>
-                        @for (row of matrixControls; track row; let i = $index) {
-                            <div style="display: flex; gap: 10px; margin-bottom: 10px">
-                                @for (column of row.controls; track $index) {
-                                    <input type="number" [formControl]="column" placeholder="C{{i+1}},{{$index+1}}"
-                                           style="display: inline-block; width: 50px;"/>
+        <h1 class="title"> Транспортная задача </h1>
+        <div class="container">
+            <div class="left-panel">
+                <div class="left-content">
+                    <div class="controls">
+                        <div class="control-row">
+                            <label>Поставщики</label><br>
+                            <input type="number" class="matrix-input" step="1" min="2" name="rows" [(ngModel)]="rows" (ngModelChange)="onRowChange()">
+                        </div>
+                        <div class="control-row">
+                            <label>Потребители</label><br>
+                            <input type="number" class="matrix-input" step="1" min="2" name="columns" [(ngModel)]="columns" (ngModelChange)="onColumnChange()">
+                        </div>
+                    </div>
+                    <form [formGroup]="formGroup" novalidate (ngSubmit)="submit()">
+                        <div class="matrix">
+                            <div class="input-val">
+                                <label>Матрица стоимости</label>
+                                @for (row of matrixControls; track row; let i = $index) {
+                                    <div class="matrix-row">
+                                        @for (column of row.controls; track $index) {
+                                            <input type="number" [formControl]="column" placeholder="C{{i+1}},{{$index+1}}" class="cell"/>
+                                        }
+                                    </div>
                                 }
                             </div>
-                        }
-                    </div>
-                    <div>
-                        <label>Возможности</label>
-                        <div style="display: flex; gap: 10px;">
-                            @for (row of suppliesControls; track $index) {
-                                <input type="number" [formControl]="row" placeholder="A{{$index+1}}"
-                                       style="display: inline-block; width: 50px;"/>
-                            }
-                        </div>
-                    </div>
-                    <div>
-                        <label>Нужды</label>
-                        <div style="display: flex; gap: 10px;">
-                            @for (row of needsControls; track $index) {
-                                <input type="number" [formControl]="row" placeholder="B{{$index+1}}"
-                                       style="display: inline-block; width: 50px;"/>
-                            }
-                        </div>
-                    </div>
-                    <br>
-                    <button>Решить</button>
-                </form>
-                @if (response) {
-                    <div>
-                        <p>Решение</p>
-                        <p>Минимальные затраты на перевозки: {{ response.cost }} у.е.</p>
-                        <table>
-                            @for (row of response.solution; track $index) {
-                                <tr>
-                                    @for (col of row; track $index) {
-                                        <td>{{ col }}</td>
+                            <div class="input-val">
+                                <label>Возможности</label>
+                                <div class="flex-center">
+                                    @for (row of suppliesControls; track $index) {
+                                        <input type="number" [formControl]="row" placeholder="A{{$index+1}}" class="cell"/>
                                     }
-                                </tr>
-                            }
-                        </table>
-                    </div>
-                }
+                                </div>
+                            </div>
+                            <div class="input-val">
+                                <label>Нужды</label>
+                                <div class="flex-center">
+                                    @for (row of needsControls; track $index) {
+                                        <input type="number" [formControl]="row" placeholder="B{{$index+1}}" class="cell"/>
+                                    }
+                                </div>
+                            </div>
+                            <button class="submit-btn">Решить</button>
+                        </div>
+                    </form>
+                    @if (response) {
+                        <div class="solution">
+                            <p>Решение</p>
+                            <p>Минимальные затраты на перевозки: {{ response.cost }} у.е.</p>
+                            <table class="result-table">
+                                @for (row of response.solution; track $index) {
+                                    <tr>
+                                        @for (col of row; track $index) {
+                                            <td>{{ col }}</td>
+                                        }
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    }
+                </div>
             </div>
-            <div style="width:50%; float: right; display: inline-block;">
+            <div class="right-panel">
                 <p>Тут история</p>
                 <div>
-                    <table style="border-collapse: separate; border-spacing: 0 1em;">
+                    <table class="history-table">
                         @for (row of history; track $index){
-                            <tr (click)="historyClick(row)" style="cursor: pointer; padding-bottom: 50px">
-                                <td>{{row.id}}</td>
+                            <tr (click)="historyClick(row)" class="history-row">
                                 <td>[{{row.matrix}}]</td>
+                                <td>[{{row.supplies}}]</td>
+                                <td>[{{row.needs}}]</td>
                             </tr>
                         }
                     </table>
