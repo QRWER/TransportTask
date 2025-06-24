@@ -25,14 +25,13 @@ input{
 
 .controls {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
+    justify-content: center; /* Центрируем группу */
+    gap: 40px; /* Расстояние между "Поставщиками" и "Потребителями" */
     margin-bottom: 20px;
 }
 
 .control-row {
     text-align: center;
-    flex: 1;
 }
 
 .left-content {
@@ -52,9 +51,14 @@ input{
 .right-panel {
     width: 50%;
     float: right;
-    display: inline-block;
+    display: flex;
     vertical-align: top;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
 }
+
 
 .matrix-row {
     display: flex;
@@ -122,8 +126,26 @@ input{
     background-color: #f0f0f0;
 }
 
+.no-point,
+.no-point:hover {
+    cursor: default !important;
+    background-color: transparent !important;
+}
+
+.history-table thead tr th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #ccc;
+    padding: 10px;
+}
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+td{
+    text-align: center;
 }

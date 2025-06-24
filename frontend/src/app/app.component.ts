@@ -57,7 +57,6 @@ import {Solution} from "./Solution";
                     </form>
                     @if (response) {
                         <div class="solution">
-                            <p>Решение</p>
                             <p>Минимальные затраты на перевозки: {{ response.cost }} у.е.</p>
                             <table class="result-table">
                                 @for (row of response.solution; track $index) {
@@ -73,16 +72,25 @@ import {Solution} from "./Solution";
                 </div>
             </div>
             <div class="right-panel">
-                <p>Тут история</p>
+                <h3 style="text-align: center">История задач</h3>
                 <div>
                     <table class="history-table">
-                        @for (row of history; track $index){
-                            <tr (click)="historyClick(row)" class="history-row">
-                                <td>[{{row.matrix}}]</td>
-                                <td>[{{row.supplies}}]</td>
-                                <td>[{{row.needs}}]</td>
+                        <thead>
+                            <tr class="no-point">
+                                <th>Матрица стоимости</th>
+                                <th>Возможности</th>
+                                <th>Нужды</th>
                             </tr>
-                        }
+                        </thead>
+                        <tbody>
+                            @for (row of history; track $index){
+                                <tr (click)="historyClick(row)" class="history-row">
+                                    <td>[{{row.matrix}}]</td>
+                                    <td>[{{row.supplies}}]</td>
+                                    <td>[{{row.needs}}]</td>
+                                </tr>
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>
