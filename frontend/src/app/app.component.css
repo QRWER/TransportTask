@@ -17,8 +17,19 @@ body {
 
 /* Основной контейнер */
 .container {
-    display: block;
+    display: flex;
+    flex-wrap: wrap; /* Позволяет блокам переноситься на новую строку */
     width: 100%;
+}
+
+.history-wrapper table {
+    margin: 0 auto;
+}
+
+.history-wrapper h3 {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 8px;
 }
 
 /* Ввод чисел */
@@ -55,15 +66,28 @@ input:focus {
     color: #555;
 }
 
-/* Контент левой панели */
 .left-panel {
     width: 50%;
-    float: left;
     display: flex;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 40px 20px;
+    justify-content: center; /* Горизонтальное центрирование */
+    min-height: auto;
+    padding: 20px;
     box-sizing: border-box;
+}
+
+.right-panel {
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Адаптация под маленькие экраны */
+@media (max-width: 768px) {
+    .left-panel,
+    .right-panel {
+        width: 100%; /* Делаем блоки вертикальными */
+        float: none;
+    }
 }
 
 .left-content {
@@ -87,7 +111,7 @@ input:focus {
     width: 30px;
     height: 30px;
     line-height: 36px;
-    font-size: 14px;
+    font-size: 11px;
     border-radius: 6px;
     border: 1px solid #ddd;
     transition: all 0.2s;
@@ -153,17 +177,6 @@ input:focus {
     text-align: center;
 }
 
-/* История задач */
-.right-panel {
-    width: 50%;
-    float: right;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 20px;
-    box-sizing: border-box;
-}
-
 .history-table {
     width: 90%;
     background: white;
@@ -207,4 +220,37 @@ input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+
+
+
+
+
+
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(231,76,60);
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    z-index: 1000;
+    animation: fadeSlide 0.3s ease-in-out;
+}
+
+/* Анимация появления/исчезновения */
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }
