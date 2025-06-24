@@ -16,11 +16,11 @@ import {Solution} from "./Solution";
                 <div class="left-content">
                     <div class="controls">
                         <div class="control-row">
-                            <label>Поставщики</label><br>
+                            <label>Поставщики</label>
                             <input type="number" class="matrix-input" step="1" min="2" name="rows" [(ngModel)]="rows" (ngModelChange)="onRowChange()">
                         </div>
                         <div class="control-row">
-                            <label>Потребители</label><br>
+                            <label>Потребители</label>
                             <input type="number" class="matrix-input" step="1" min="2" name="columns" [(ngModel)]="columns" (ngModelChange)="onColumnChange()">
                         </div>
                     </div>
@@ -52,7 +52,9 @@ import {Solution} from "./Solution";
                                     }
                                 </div>
                             </div>
-                            <button class="submit-btn">Решить</button>
+                            <div class="submit-wrapper">
+                                <button class="submit-btn">Решить</button>
+                            </div>
                         </div>
                     </form>
                     @if (response) {
