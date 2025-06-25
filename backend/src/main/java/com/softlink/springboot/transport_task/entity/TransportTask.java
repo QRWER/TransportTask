@@ -1,7 +1,12 @@
 package com.softlink.springboot.transport_task.entity;
 import com.softlink.springboot.transport_task.converter.MatrixConverter;
 import com.softlink.springboot.transport_task.converter.VectorConverter;
+import com.softlink.springboot.transport_task.validator.CheckIntArray;
+import com.softlink.springboot.transport_task.validator.CheckIntMatrix;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -16,16 +21,19 @@ public class TransportTask {
     @Convert(converter = MatrixConverter.class)
     @Column(columnDefinition = "JSONB")
     @JdbcTypeCode(SqlTypes.JSON)
+    @CheckIntMatrix(min = 1, message = "Значения Matrix должны быть больше 1")
     private int[][] matrix;
 
     @Convert(converter = VectorConverter.class)
     @Column(columnDefinition = "JSONB")
     @JdbcTypeCode(SqlTypes.JSON)
+    @CheckIntArray(min = 1, message = "Значения Supplies должны быть больше 1")
     private int[] supplies;
 
     @Convert(converter = VectorConverter.class)
     @Column(columnDefinition = "JSONB")
     @JdbcTypeCode(SqlTypes.JSON)
+    @CheckIntArray(min = 1, message = "Значения Needs должны быть больше 1")
     private int[] needs;
 
     private void checkSuppliesSize(int[][] matrix, int[] supplies) {
